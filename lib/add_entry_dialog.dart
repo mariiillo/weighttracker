@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:weighttracker/date_time_item.dart';
 import 'package:weighttracker/model/weight_save.dart';
 
 class AddEntryDialog extends StatefulWidget {
@@ -10,6 +11,8 @@ class AddEntryDialog extends StatefulWidget {
 }
 
 class _AddEntryDialogState extends State<AddEntryDialog> {
+  DateTime _dateTime = new DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -31,7 +34,13 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
           )
         ],
       ),
-      body: new Text('Foo'),
+      body: new ListTile(
+        leading: new Icon(Icons.today, color: Colors.grey[500]),
+        title: new DateTimeItem(
+          dateTime: _dateTime,
+          onChanged: (dateTime) => setState(() => _dateTime = dateTime),
+        ),
+      )
     );
   }
 }
