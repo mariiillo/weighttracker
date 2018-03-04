@@ -1,4 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:weighttracker/model/weight_save.dart';
+import 'package:weighttracker/weight_list_item.dart';
 
 void main() => runApp(new MyApp());
 
@@ -26,11 +30,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<String> strings = new List();
+  List<WeightSave> weightSaves= new List();
 
   void _addWeightSave() {
     setState(() {
-      strings.add("new string");
+      weightSaves.add(
+        new WeightSave(
+          new DateTime.now(),
+          new Random().nextInt(100).toDouble()
+        )
+      );
     });
   }
 
@@ -41,12 +50,11 @@ class _HomePageState extends State<HomePage> {
         title: new Text(widget.title),
       ),
       body: new ListView(
-        children: strings.map((String string) {
-          return new Row(
-            children: [
-              new Text(string)
-            ],
-          );
+        children: weightSaves.map((WeightSave weightSave) {
+          double difference = weightSaves.first == weightSave
+              ? 0.0
+              : weightSave.weight - weightSaves[weightSaves.indexOf(weightSave) - 1].weight;
+          return new WeightListItem(weightSave, difference);
         }).toList(),
       ),
       floatingActionButton: new FloatingActionButton(
