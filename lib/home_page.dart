@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:weighttracker/add_entry_dialog.dart';
 import 'package:weighttracker/model/weight_save.dart';
@@ -39,12 +40,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openAddEntryDialog() {
-    Navigator.of(context).push(new MaterialPageRoute<Null>(
-        builder: (BuildContext context) {
-          return new AddEntryDialog();
-        },
-        fullscreenDialog: true
+  Future _openAddEntryDialog() async {
+    WeightSave save = await Navigator.of(context).push(new MaterialPageRoute<WeightSave>(
+      builder: (BuildContext context) {
+        return new AddEntryDialog();
+      },
+      fullscreenDialog: true
     ));
+    if (save != null) {
+      _addWeightSave(save);
+    }
+  }
+
+  _addWeightSave(save) {
+    setState(() {
+      weightSaves.add(save);
+    });
   }
 }

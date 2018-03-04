@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:weighttracker/model/weight_save.dart';
 
 class AddEntryDialog extends StatefulWidget {
 
@@ -15,7 +18,12 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
         actions: [
           new FlatButton(
             onPressed: () {
-
+              Navigator.of(context).pop(
+                new WeightSave(
+                  new DateTime.now(),
+                  new Random().nextInt(100).toDouble()
+                )
+              );
             },
             child: new Text('SAVE',
               style: Theme.of(context).textTheme.subhead.copyWith(color: Colors.white)
