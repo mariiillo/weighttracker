@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:weighttracker/add_entry_dialog.dart';
 import 'package:weighttracker/model/weight_save.dart';
 import 'package:weighttracker/weight_list_item.dart';
 
@@ -31,18 +32,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<WeightSave> weightSaves= new List();
-
-  void _addWeightSave() {
-    setState(() {
-      weightSaves.add(
-        new WeightSave(
-          new DateTime.now(),
-          new Random().nextInt(100).toDouble()
-        )
-      );
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -60,10 +50,19 @@ class _HomePageState extends State<HomePage> {
         }
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: _addWeightSave,
+        onPressed: _openAddEntryDialog,
         tooltip: 'Add new weight entry',
         child: new Icon(Icons.add),
       ),
     );
+  }
+
+  void _openAddEntryDialog() {
+    Navigator.of(context).push(new MaterialPageRoute<Null>(
+      builder: (BuildContext context) {
+        return new AddEntryDialog();
+      },
+      fullscreenDialog: true
+    ));
   }
 }
