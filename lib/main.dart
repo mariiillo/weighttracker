@@ -49,13 +49,15 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         title: new Text(widget.title),
       ),
-      body: new ListView(
-        children: weightSaves.map((WeightSave weightSave) {
+      body: new ListView.builder(
+        itemCount: weightSaves.length,
+        itemBuilder: (BuildContext context, int index) {
+          WeightSave weightSave = weightSaves[index];
           double difference = weightSaves.first == weightSave
               ? 0.0
               : weightSave.weight - weightSaves[weightSaves.indexOf(weightSave) - 1].weight;
           return new WeightListItem(weightSave, difference);
-        }).toList(),
+        }
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: _addWeightSave,
